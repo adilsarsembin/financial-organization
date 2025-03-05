@@ -1,0 +1,61 @@
+# --- Backend (Django) ---
+
+# Virtual environment
+backend/venv/
+backend/.venv/
+
+# Byte-compiled / cache files
+backend/__pycache__/
+backend/**/*.pyc
+backend/**/*.pyo
+
+# Django secret keys and environment variables
+backend/.env
+
+# SQLite database (if used)
+backend/db.sqlite3
+backend/db.sqlite3-journal
+
+# Migrations (optional, if you regenerate them often)
+backend/**/migrations/*.pyc
+backend/**/migrations/*.py
+
+# Static and media files (if you generate them separately)
+backend/static/
+backend/media/
+
+# Logs
+backend/logs/
+*.log
+
+# --- Frontend (Vue.js) ---
+
+# Node modules
+frontend/node_modules/
+
+# Vue build output
+frontend/dist/
+
+# Vue environment files
+frontend/.env
+frontend/.env.local
+frontend/.env.production
+
+# Logs and caches
+frontend/logs/
+frontend/.cache/
+frontend/.vitepress/
+frontend/.nuxt/
+frontend/.output/
+
+# --- General ---
+
+# IDE/editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS-specific files
+.DS_Store
+Thumbs.db
