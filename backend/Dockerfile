@@ -1,30 +1,20 @@
-FROM python:3.12
+FROM python:3.10-slim-bullseye
 
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
-    libc-dev \
-    libpq-dev \
-    libgdal-dev \
-    gdal-bin \
-    && pip install --no-cache-dir --upgrade pip \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+      binutils \
+      libproj-dev \
+      gdal-bin \
+      libgdal-dev && \
+    rm -rf /var/lib/apt/lists/*
 
-# Copy and install Python requirements
-COPY requirements.txt .
+COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy project files
-COPY . .
+COPY . /app
 
-# Set environment variables
-ENV PYTHONUNBUFFERED=1 \
-    PATH="/usr/local/bin:$PATH"
-
-# Expose port
 EXPOSE 8000
 
-# Run Gunicorn
-CMD ["gunicorn", "financial_organization.wsgi:application", "--workers", "2", "--threads", "4", "--bind", "0.0.0.0:8000"]
+CMD ["gunicorn", "financial_organization.wsgi:application", "--bind", "0.0.0.0:8000"]
