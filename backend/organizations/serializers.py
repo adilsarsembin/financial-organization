@@ -5,7 +5,7 @@ from .models import FinancialOrganization, FinancialOrganizationNews
 class NewsSerializer(serializers.ModelSerializer):
     class Meta:
         model = FinancialOrganizationNews
-        fields = ['title', 'summary', 'url', 'published_date']
+        fields = ['created_at', 'title', 'content']
 
 
 class OrganizationSerializer(serializers.ModelSerializer):
@@ -13,4 +13,4 @@ class OrganizationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FinancialOrganization
-        fields = ['id', 'name', 'address', 'phone', 'email', 'news']
+        fields = ['id', 'name', 'address', 'email', 'news']

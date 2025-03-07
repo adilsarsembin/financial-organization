@@ -15,6 +15,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /app
 
-EXPOSE 8000
+COPY ./docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
 
-CMD ["gunicorn", "financial_organization.wsgi:application", "--bind", "0.0.0.0:8000"]
+ENV PYTHONUNBUFFERED=1 \
+    PORT=8000
+
+CMD ["/docker-entrypoint.sh"]

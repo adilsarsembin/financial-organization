@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.gis',
+    'django_celery_results',
     'rest_framework',
     'organizations',
 ]
@@ -89,9 +90,13 @@ DATABASES = {
 }
 
 
-CELERY_BROKER_URL = 'redis://redis:6379/0'
-CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
-NEWS_API_KEY = os.environ.get('NEWS_API_KEY', '')  # TODO: add news url
+# Celery configuration
+REDIS_HOST = os.getenv('REDIS_HOST', 'localhost')
+REDIS_PORT = os.getenv('REDIS_PORT', '6379')
+CELERY_BROKER_URL = 'redis://{host}:{port}'.format(host=REDIS_HOST, port=REDIS_PORT)
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_TASK_DEFAULT_QUEUE = 'financial-organization'
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
 
 
 # Password validation
@@ -128,9 +133,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = os.getenv('STATIC_URL', '/api/static/')
+STATIC_ROOT = os.getenv('STATIC_ROOT', os.path.join(BASE_DIR, 'static'))
+
+MEDIA_URL = os.getenv('MEDIA_URL', '/api/media/')
+MEDIA_ROOT = os.getenv('MEDIA_ROOT', os.path.join(BASE_DIR, 'media'))
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+NEWS_API_KEY = os.getenv('NEWS_API_KEY', '2f530d33b6234a0ca52b9c489d1c5945')

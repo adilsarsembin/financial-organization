@@ -16,10 +16,6 @@ backend/.env
 backend/db.sqlite3
 backend/db.sqlite3-journal
 
-# Migrations (optional, if you regenerate them often)
-backend/**/migrations/*.pyc
-backend/**/migrations/*.py
-
 # Static and media files (if you generate them separately)
 backend/static/
 backend/media/

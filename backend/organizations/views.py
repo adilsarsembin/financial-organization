@@ -1,13 +1,8 @@
 from rest_framework import viewsets
-from .models import FinancialOrganization, FinancialOrganizationNews
-from .serializers import OrganizationSerializer, NewsSerializer
+from .models import FinancialOrganization
+from .serializers import OrganizationSerializer
 
 
-class OrganizationViewSet(viewsets.ModelViewSet):
-    queryset = FinancialOrganization.objects.all()
+class OrganizationViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = FinancialOrganization.objects.prefetch_related('news')
     serializer_class = OrganizationSerializer
-
-
-class NewsViewSet(viewsets.ModelViewSet):
-    queryset = FinancialOrganizationNews.objects.all()
-    serializer_class = NewsSerializer
